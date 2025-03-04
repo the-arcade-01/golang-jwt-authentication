@@ -1,0 +1,25 @@
+services:
+  db:
+    image: mysql:8.0.33
+    container_name: golang_jwt_auth
+    networks:
+      - default
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    volumes:
+      - ../db/db.sql:/docker-entrypoint-initdb.d/0_init.sql
+      - golang_jwt_auth_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+volumes:
+  golang_jwt_auth_data:
+
+networks:
+  default:
