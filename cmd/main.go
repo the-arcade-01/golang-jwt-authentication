@@ -9,6 +9,7 @@ import (
 	"github.com/the-arcade-01/golang-jwt-authentication/internal/utils"
 )
 
+// init loads environment variables from a .env file and parses them.
 func init() {
 	err := godotenv.Load()
 	if err != nil {
@@ -21,6 +22,7 @@ func init() {
 	}
 }
 
+// main initializes the server and starts listening on port 8080.
 func main() {
 	server := api.NewServer()
 	utils.Log.Info("server running on port:8080")

@@ -20,6 +20,7 @@ func (s *statusRecorder) WriteHeader(status int) {
 	s.ResponseWriter.WriteHeader(status)
 }
 
+// requestLogger logs the details of each HTTP request including method, URL, remote address, user agent, response time, and status code.
 func requestLogger(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
@@ -38,6 +39,8 @@ func requestLogger(next http.Handler) http.Handler {
 	})
 }
 
+// parseClaims extracts the user ID from the JWT claims and adds it to the request context.
+// If the token is invalid, it responds with an unauthorized error.
 func parseClaims(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		_, claims, err := jwtauth.FromContext(r.Context())

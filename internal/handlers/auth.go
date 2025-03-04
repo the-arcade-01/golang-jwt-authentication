@@ -91,6 +91,13 @@ func (h *AuthHandlers) LoginUser(w http.ResponseWriter, r *http.Request) {
 	models.ResponseWithJSON(w, http.StatusOK, &models.Response{Success: true, Status: http.StatusOK, Data: tokensResponse})
 }
 
+// RefreshToken handles the token refresh process for authenticated users.
+// It retrieves the JWT cookie from the request, validates it, and generates new access and refresh tokens.
+// If the JWT cookie is missing or invalid, it responds with an unauthorized status.
+// If the token generation is successful, it sets the new refresh token in the cookie and responds with the new access token.
+//
+// @param w http.ResponseWriter - the response writer to send the response
+// @param r *http.Request - the incoming HTTP request containing the JWT cookie
 func (h *AuthHandlers) RefreshToken(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("jwt")
 	if err != nil || cookie.Value == "" {

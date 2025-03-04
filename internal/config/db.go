@@ -8,6 +8,14 @@ import (
 	"github.com/the-arcade-01/golang-jwt-authentication/internal/utils"
 )
 
+// newDBClient initializes a new database client using the configuration
+// specified in the environment variables. It sets the connection
+// maximum lifetime, maximum open connections, and maximum idle connections
+// based on the environment variables. It also pings the database to ensure
+// the connection is established successfully.
+//
+// Returns a pointer to the sql.DB instance and an error if any occurs
+// during the process.
 func newDBClient() (*sql.DB, error) {
 	db, err := sql.Open(Envs.DB_DRIVER, Envs.DB_URL)
 	if err != nil {

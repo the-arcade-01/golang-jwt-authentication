@@ -14,6 +14,7 @@ var (
 	Envs    *AppEnvs
 )
 
+// AppEnvs holds the environment variables for the application.
 type AppEnvs struct {
 	ENV                       string
 	WEB_URL                   string
@@ -29,6 +30,11 @@ type AppEnvs struct {
 	HTTP_REFRESH_TOKEN_EXPIRE int
 }
 
+// ParseEnvs parses the environment variables and stores them in the AppEnvs struct.
+// It ensures that the environment variables are parsed only once using sync.Once.
+// If any required environment variable is missing or invalid, it returns an error.
+// Wherever you want to use environment variables, first parse them using this function
+// and then use the Envs variable declared about in vars.
 func ParseEnvs() (*AppEnvs, error) {
 	var err error
 	envOnce.Do(func() {
@@ -106,6 +112,8 @@ func ParseEnvs() (*AppEnvs, error) {
 	return Envs, nil
 }
 
+// stringToInt converts a string to an integer.
+// It returns an error if the string cannot be converted to an integer.
 func stringToInt(s string) (int, error) {
 	val, err := strconv.Atoi(s)
 	if err != nil {
